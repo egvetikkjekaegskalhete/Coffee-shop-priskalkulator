@@ -23,7 +23,7 @@ takeaway = {    #Her lagde jeg enda en ordbok med Ja og Nei som skal brukes til 
 }
 
 spørsmål = [      #Imotsettning til de andre ordbøkene så har jeg valgt å lagre spørsmålene i en liste. Dette er fordi det er bedre å bruke en liste om du skal hente ut inholdet etter hverandre. 
-   "Hvor mange kopper skal du ha? ", "Hvilke kaffetype skal du ha? ", "Hvilke størreslse hvil du ha på koppen? ", "Take Away? " 
+   "Hvor mange kopper skal du ha? (Skriv stop om du vil avslutte programmet): ", "Hvilke kaffetype skal du ha? (Skriv stop om du vil avslutte programmet): ", "Hvilke størreslse hvil du ha på koppen? (Skriv stop om du vil avslutte programmet): ", "Take Away? (Skriv stop om du vil avslutte programmet): " 
 ]
 
 
@@ -32,8 +32,7 @@ spørsmål = [      #Imotsettning til de andre ordbøkene så har jeg valgt å l
 def program(liste1, liste2, liste3, liste4):    #Dette er selve programmet. Her definerer eg program med antall lister eg har som ligger øverst i koden.
    global mengde_kaffekopper, pris        #Her setter jeg de variablene helt øverst som en global for at de skal kunne brukes inne i en def.
    
-   mengde_kaffekopper = int(input(spørsmål[0]))    #Det denne gjør er å spørre deg spørsmål med indexen 0, og venter på ditt input. Etter det lagrer den verdien i variablen mengde_kaffekopper som en int siden det skal være et helt tall. 
-   
+   mengde_kaffekopper = int(input(spørsmål[0])) #Det denne gjør er å spørre deg spørsmål med indexen 0, og venter på ditt input. Etter det lagrer den verdien i variablen mengde_kaffekopper som en int siden det skal være et helt tall. 
    
    print("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
    print("+                               +")
@@ -56,18 +55,27 @@ def program(liste1, liste2, liste3, liste4):    #Dette er selve programmet. Her 
    for i in range(mengde_kaffekopper):    #Denne tar verdien som ble lagret i det første spørsmålet og kjører alt inni denne løkken flere ganger basert på hva du skrev inn i mengde_kaffekopper.
    
       type_kaffe = input(spørsmål[1]).title()      #Nå spør den deg om spørsmålet i listen som har en index på 1. og setter svaret til å ha stor forbokstav. dette skjer fordi det .title() funksjonen er på slutten av inputen.
+      if type_kaffe == "Stop":
+         pris = 0
+         break
       while type_kaffe not in kaffetyper:    #Så lenge det du skrev inn i spørsmålet over ikke ligger i ordboken kaffetyper, så sier den at de ikkje har den kaffetypen og spør deg samme spørsmål omigjen.
          print("Desverre så har vi ikkje denne kaffetypen i butikken.")
          type_kaffe = input(spørsmål[1]).title()
-   
+      
       kopp_størrelse = input(spørsmål[2]).title()     #Dette er litt det samme som kaffetype spørsmålet, men litt anderledes. Det du skriver blir lagret i kopp_størrelse
       if kopp_størrelse == "":      #Men denne har en "Om du ikkje skriver noe inn i spørsmålet om koppstørelse, så setter den koppstørelsen automatisk til medium."
          kopp_størrelse = "Medium"
+      elif kopp_størrelse == "Stop":
+         pris = 0
+         break
       while kopp_størrelse not in størrelse:    #Denne er samme som while løkken over. 
          print("Denne størrelsen har vi ikkje. Velg mellom Medium(standard), Stor eller Ekstra Stor")
          kopp_størrelse = input(spørsmål[2]).title()
    
       spisested = input(spørsmål[3]).title()    #Det siste spørsmålet er akkuratt som det første. Den spør spørsmålet med indexen 3 i spørsmål listen og gjør at svaret har stor bokstav.
+      if spisested == "Stop":
+         pris = 0
+         break
       while spisested not in takeaway:    #Sålenge svaret ikkje er ja eller nei så stiller han deg spørsmålet igjen.
          print("Svar med Ja eller Nei")
          spisested = input(spørsmål[3]).title()
